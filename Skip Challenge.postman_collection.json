@@ -1,0 +1,216 @@
+{
+	"info": {
+		"name": "Skip Challenge",
+		"_postman_id": "41e3a24c-ae11-4bfe-9504-014730c91588",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"rafael\",\n\t\"password\": \"rafael\",\n\t\"fullname\": \"Rafael Paulino\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a24b5d12-937c-4718-9d5f-a1eb7f646369",
+						"type": "text/javascript",
+						"exec": [
+							"postman.setEnvironmentVariable(\"authorization\", postman.getResponseHeader(\"Authorization\"));",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"rafael\",\n\t\"password\": \"rafael\"\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Search Products",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/products?size=1&page=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "1",
+							"equals": true
+						},
+						{
+							"key": "page",
+							"value": "0",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Put Order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"deliverAddress\":  \"3L6, 136 Market Ave, Winnipeg, MB R3B 3N2, Canadá\",\n\t\"contact\": \"developer@skipthedishes.com\",\n\t\"items\": [\n\t\t{\n\t\t\t\"productId\": 1,\n\t\t\t\"quantity\": 1\n\t\t}, {\n\t\t\t\"productId\": 2,\n\t\t\t\"quantity\": 2\n\t\t}, {\n\t\t\t\"productId\": 3,\n\t\t\t\"quantity\": 1\n\t\t}, {\n\t\t\t\"productId\": 5,\n\t\t\t\"quantity\": 2\n\t\t}\n\t]\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"reason\": \"Changed my mind\"\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/orders/1/cancel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders",
+						"1",
+						"cancel"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order Status",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{authorization}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/orders/1/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders",
+						"1",
+						"status"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

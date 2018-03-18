@@ -58,7 +58,22 @@ Access `http://localhost:15672` and create the following queues:
 7. We should also have created Spring Boot Profiles to have different properties on different
    environments. We could also use ENVIRONMENT VARIABLES in configuration files
    to handle, for example, database connection, rabbitmq connection, etc.
+   
+8. I have decided to use `JWT Tokens` instead of sessions. This might be of better use
+   when dealing with microservices. Also, it would be easier to integrate with third-party
+   authentication (google, faceboot, etc.). That way, all requests are `Stateless` which
+   make the service easier to **scale**.
 
 ## Test
 
 There was not enough time during the day to work on tests, so I have provided just one simple example.
+
+## Postman
+
+The file `Skip Challenge.postman_collection.json` can be imported to easy manual test the REST
+service.
+
+Be aware to create an `Environment` and define 'authorization' variable.
+
+Then, after registering an user, you should login and, after that, the calls will be using
+the Bearer authentication.
