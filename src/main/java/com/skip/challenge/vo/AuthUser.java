@@ -1,10 +1,7 @@
 package com.skip.challenge.vo;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 
 public class AuthUser {
@@ -18,6 +15,11 @@ public class AuthUser {
     private String password;
 
     public AuthUser() {}
+
+    public AuthUser(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public String getUsername() {
         return username;
