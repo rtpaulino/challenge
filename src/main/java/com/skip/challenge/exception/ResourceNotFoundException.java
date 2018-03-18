@@ -9,7 +9,7 @@ public class ResourceNotFoundException extends FunctionalException {
     }
 
     @Override
-    int getResponseCode() {
-        return HttpStatus.NOT_FOUND.value();
+    HttpStatus getStatus() {
+        return HttpStatus.NOT_FOUND;
     }
 }

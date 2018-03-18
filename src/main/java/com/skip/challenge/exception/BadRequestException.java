@@ -9,7 +9,7 @@ public class BadRequestException extends FunctionalException {
     }
 
     @Override
-    int getResponseCode() {
-        return HttpStatus.BAD_REQUEST.value();
+    HttpStatus getStatus() {
+        return HttpStatus.BAD_REQUEST;
     }
 }

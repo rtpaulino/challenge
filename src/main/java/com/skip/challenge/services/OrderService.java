@@ -1,5 +1,7 @@
 package com.skip.challenge.services;
 
+import com.skip.challenge.events.OrderCancellationEvent;
+import com.skip.challenge.events.OrderCreationEvent;
 import com.skip.challenge.exception.BadRequestException;
 import com.skip.challenge.exception.ResourceNotFoundException;
 import com.skip.challenge.model.Order;
@@ -10,6 +12,7 @@ import com.skip.challenge.security.IAuthenticationFacade;
 import com.skip.challenge.vo.OrderCancellationVO;
 import com.skip.challenge.vo.OrderStatusVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +30,9 @@ public class OrderService {
 
     @Autowired
     IAuthenticationFacade authenticationFacade;
+
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     private Long getUserId() {
         return authenticationFacade.getUserId()
@@ -60,7 +66,11 @@ public class OrderService {
         order.setLastUpdate(now);
         updateOrderDetails(order);
 
-        return repository.save(order);
+        Order result = repository.save(order);
+
+        eventPublisher.publishEvent(new OrderCreationEvent(this, result));
+
+        return result;
     }
 
     @Transactional
@@ -82,7 +92,9 @@ public class OrderService {
         order.setLastUpdate(now);
         order.setCancelationDate(now);
         order.setCancelationReason(cancellationVO.getReason());
-        repository.save(order);
+        Order result = repository.save(order);
+
+        eventPublisher.publishEvent(new OrderCancellationEvent(this, result));
     }
 
     public OrderStatusVO getStatus(Long id) {
